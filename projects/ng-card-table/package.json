@@ -1,0 +1,27 @@
+{
+  "name": "ng-card-table",
+  "version": "0.1.0",
+  "description": "Angular building blocks for card and tile games: zones, dealing, playing and flying cards between them.",
+  "license": "MIT",
+  "author": "Anton de Groot",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AntondeGroot/ng-card-table.git"
+  },
+  "homepage": "https://github.com/AntondeGroot/ng-card-table#readme",
+  "keywords": [
+    "angular",
+    "cards",
+    "card-game",
+    "animation",
+    "rummikub"
+  ],
+  "peerDependencies": {
+    "@angular/common": "^22.2.0",
+    "@angular/core": "^22.2.0"
+  },
+  "dependencies": {
+    "tslib": "^2.3.0"
+  },
+  "sideEffects": false
+}
