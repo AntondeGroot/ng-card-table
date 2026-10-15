@@ -28,7 +28,7 @@ when the SVG no longer matches it.
   computes and raises click/hover events. No game logic.
 - **`TableLayout`** — the seam. Your game decides _where_ cards live: the hand fan, the pile stack and
   the deck, each a zone layout. `DEFAULT_LAYOUT` ships a sensible linear-fan + spiral-pile layout.
-- **`<ct-card>`** — one playing card, drawn from a sprite sheet (bundled `card-deck.png` by default,
+- **`<ct-card>`** — one playing card, drawn from a sprite sheet (bundled `card-deck.webp` by default,
   swappable per game).
 
 ---
@@ -45,7 +45,7 @@ The sources live in `src/lib/`; `src/public-api.ts` is what a game can import.
 | `default-layout.ts`         | `DEFAULT_LAYOUT` — a ready-made hand-fan + spiral-pile layout, with the deck on the pile.                        |
 | `card-layer.ts/.html/.scss` | The `<ct-card-layer>` presentational component.                                                                  |
 | `card/card.ts/.html/.scss`  | The `<ct-card>` sprite component.                                                                                |
-| `card/card-deck.png`        | The default sprite sheet (13 cols × 5 rows).                                                                     |
+| `card/card-deck.webp`       | The default sprite sheet (13 cols × 5 rows), shipped as the package's `assets/card-deck.webp`.                   |
 | `card-table.spec.ts`        | Engine unit tests (deal / play / pile / trade lifecycle).                                                        |
 
 ---
@@ -179,8 +179,20 @@ ancestor:
 }
 ```
 
-The default `card-deck.png` is a component-relative asset, so the bundler hashes it and it resolves
-under any `<base href>` — no app-level wiring needed.
+**Using the default deck.** The package ships it as a file of its own, `assets/card-deck.webp`, so a
+game that draws its own faces never loads it. To use it, serve it at `ng-card-table/card-deck.webp`
+by adding this to the `assets` of your app in `angular.json`:
+
+```json
+{
+  "glob": "card-deck.webp",
+  "input": "node_modules/ng-card-table/assets",
+  "output": "ng-card-table"
+}
+```
+
+The path is relative, so it resolves against your page's `<base href>` — an app served from a
+sub-path finds it too. A game with its own deck sets `--ct-card-sheet` and needs none of this.
 
 ### Your own faces and shape
 
@@ -275,7 +287,8 @@ layout divides board pixel coordinates by 6 to reach `%`.
    your own `layout` if your table isn't a linear fan + central pile.
 3. Map your cards to `CardFace { uuid, suit, value }` (stable `uuid`; `suit` = sprite row,
    `value` = 1-based sprite column).
-4. Point `--ct-card-sheet` / `--ct-card-cols` / `--ct-card-rows` at your deck (or reuse `card-deck.png`).
+4. Point `--ct-card-sheet` / `--ct-card-cols` / `--ct-card-rows` at your deck, or serve the default
+   `card-deck.webp` (see [The sprite sheet](#the-sprite-sheet)).
 5. Call `dealIn` on a deal, `flyToPile` when a card is played, `tradeSwap` for a swap, `clearPile`
    on a new round. Give other players' hands a `faceDown` zone each and move their cards with
    `deal`/`place`; feed `[isSpecial]`/`[selectedUuid]` for highlights.
