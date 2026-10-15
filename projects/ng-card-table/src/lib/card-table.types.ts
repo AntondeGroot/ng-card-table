@@ -1,7 +1,7 @@
 import { Signal } from '@angular/core';
 
 /**
- * Shared types for the reusable card-table module. All coordinates are in the card-layer's own
+ * Shared types for the ng-card-table library. All coordinates are in the card-layer's own
  * percentage space (the layer is overlaid on the play area; x/y are `%` for `left`/`top`).
  */
 

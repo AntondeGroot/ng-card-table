@@ -1,4 +1,4 @@
-# `card-table` — a reusable card animation module
+# `ng-card-table` — a reusable card animation module
 
 A self-contained, game-agnostic module for the visual half of a card game: **selecting, playing,
 dealing, and animating cards onto a discard pile**, plus the zones a game adds — other players' face-down hands, a stock, melds. It knows
@@ -52,8 +52,14 @@ The sources live in `src/lib/`; `src/public-api.ts` is what a game can import.
 
 ## Quick start
 
+```sh
+npm install ng-card-table
+```
+
+It needs Angular 22 (`@angular/core` and `@angular/common`).
+
 ```ts
-import { CardLayer, CardTable } from 'card-table';
+import { CardLayer, CardTable } from 'ng-card-table';
 
 @Component({
   imports: [CardLayer /* … */],
@@ -291,3 +297,9 @@ layout divides board pixel coordinates by 6 to reach `%`.
   standalone library, give it a library-specific prefix instead.
 - **Writable `pile` signal.** `pile` is exposed writable for the rare no-animation land
   (`pile.update(...)`) and for tests; treat it as read-mostly and prefer the methods.
+
+---
+
+## Licence
+
+MIT — see [LICENSE](https://github.com/AntondeGroot/ng-card-table/blob/main/LICENSE).

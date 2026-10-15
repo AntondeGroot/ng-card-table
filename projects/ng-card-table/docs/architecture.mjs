@@ -1,8 +1,8 @@
 // Draws docs/architecture.svg — the library's public API as a UML class diagram — from the data in
 // architecture.data.mjs. Change the picture there and rerun; never edit the SVG by hand.
 //
-//   node projects/card-table/docs/architecture.mjs           writes the SVG
-//   node projects/card-table/docs/architecture.mjs --check   fails if the SVG is out of date
+//   npm run diagrams         writes the SVG
+//   npm run diagrams:check   fails if the SVG is out of date
 import { readFileSync, writeFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { CLASSES, NOTES, RELATIONS } from './architecture.data.mjs';

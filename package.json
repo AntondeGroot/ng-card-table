@@ -1,0 +1,45 @@
+{
+  "name": "ng-card-table-workspace",
+  "version": "0.0.0",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "ng": "ng",
+    "build": "ng build ng-card-table && cp LICENSE dist/ng-card-table/",
+    "test": "ng test ng-card-table",
+    "test:coverage": "ng test ng-card-table --no-watch --coverage",
+    "lint": "ng lint --max-warnings=0",
+    "lint:styles": "stylelint \"projects/**/*.scss\"",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "diagrams": "node projects/ng-card-table/docs/architecture.mjs",
+    "diagrams:check": "node projects/ng-card-table/docs/architecture.mjs --check"
+  },
+  "packageManager": "npm@12.2.0",
+  "dependencies": {
+    "@angular/common": "^22.0.0",
+    "@angular/compiler": "^22.0.0",
+    "@angular/core": "^22.0.0",
+    "@angular/platform-browser": "^22.0.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular/build": "^22.0.4",
+    "@angular/cli": "^22.0.4",
+    "@angular/compiler-cli": "^22.0.0",
+    "@eslint/js": "^10.0.1",
+    "@vitest/coverage-v8": "^5.0.0",
+    "angular-eslint": "22.6.0",
+    "eslint": "^10.3.0",
+    "eslint-plugin-sonarjs": "^4.1.0",
+    "jsdom": "^30.0.0",
+    "ng-packagr": "^22.2.0",
+    "postcss-scss": "^4.0.9",
+    "prettier": "^3.8.1",
+    "stylelint": "^17.14.1",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "8.71.2",
+    "vitest": "^5.0.0"
+  }
+}

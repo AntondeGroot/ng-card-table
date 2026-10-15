@@ -1,5 +1,5 @@
 /*
- * Public API Surface of card-table
+ * Public API Surface of ng-card-table
  */
 
 export * from './lib/card-table';
