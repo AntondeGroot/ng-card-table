@@ -12,7 +12,7 @@ it into a future card game and reuse the whole "hand → play → fly → pile" 
 
 ## Design in one picture
 
-![A UML class diagram: your game component creates and drives a CardTable and binds a CardLayer, which holds that table and owns the Card components it draws. The CardTable uses a CardTableConfig, whose optional TableLayout gives a ZoneLayout for the hand, pile and deck, and it owns its Zones, each laid out by a ZoneLayout.](docs/architecture.svg)
+![A UML class diagram: your game component creates and drives a CardTable and binds a CardLayer, which holds that table and owns the Card components it draws. The CardTable uses a CardTableConfig, whose optional TableLayout gives a ZoneLayout for the hand, pile and deck, and it owns its Zones, each laid out by a ZoneLayout.](https://raw.githubusercontent.com/AntondeGroot/ng-card-table/main/projects/ng-card-table/docs/architecture.svg)
 
 How to read it (UML): a **dashed arrow** means "depends on", and its «label» says how; a **solid
 arrow** means "holds a reference to", with the name and how many (`1`, `0..1`, `*`) at its head; a
