@@ -3,5 +3,12 @@
   "dest": "../../dist/ng-card-table",
   "lib": {
     "entryFile": "src/public-api.ts"
-  }
+  },
+  "assets": [
+    {
+      "input": "src/lib/card",
+      "glob": "card-deck.webp",
+      "output": "assets"
+    }
+  ]
 }
