@@ -1,6 +1,6 @@
 {
   "name": "ng-card-table",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Angular building blocks for card and tile games: zones, dealing, playing and flying cards between them.",
   "license": "MIT",
   "author": "Anton de Groot",

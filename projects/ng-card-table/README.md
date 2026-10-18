@@ -237,6 +237,7 @@ set their size on the layer: `--ct-card-width` (a share of the board, default `1
 | `flyToPile(card, opts?)`                  | method                      | Fly a card (own play `{pop:true}` / opponent `{flip:'in',startScale}`) to the pile. The card carries its id + face + start slot; a faceless card (no `uuid`) lands with a synthetic id. A hand card is masked while its flyer is up and snaps onto the pile on landing, so it never flies twice. |
 | `tradeSwap(partner, gave, got)`           | method                      | Two-way swap between the viewer's hand and a partner fan (masks the received card until its flyer lands).                                                                                                                                                                                        |
 | `clearPile()`                             | method                      | Empty the pile (a new round).                                                                                                                                                                                                                                                                    |
+| `restorePile(faces)`                      | method                      | Lay the pile out from a list of faces (`{ suit, value }`, in play order) — after a refresh or reconnect, when the table never saw them played. They lie there at once, without flying, each with a fresh synthetic id; whatever was on the pile is replaced.                                     |
 
 ### `<ct-card-layer>` (component)
 
@@ -290,7 +291,7 @@ layout divides board pixel coordinates by 6 to reach `%`.
 4. Point `--ct-card-sheet` / `--ct-card-cols` / `--ct-card-rows` at your deck, or serve the default
    `card-deck.webp` (see [The sprite sheet](#the-sprite-sheet)).
 5. Call `dealIn` on a deal, `flyToPile` when a card is played, `tradeSwap` for a swap, `clearPile`
-   on a new round. Give other players' hands a `faceDown` zone each and move their cards with
+   on a new round, and `restorePile` when the viewer joins a game already under way. Give other players' hands a `faceDown` zone each and move their cards with
    `deal`/`place`; feed `[isSpecial]`/`[selectedUuid]` for highlights.
 
 ---

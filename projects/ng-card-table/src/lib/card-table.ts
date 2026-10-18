@@ -30,7 +30,7 @@ const DEAL_CLEAR_BUFFER_MS = 2000;
  *
  * A game sets it up with a {@link CardTableConfig} — its hand, and optionally a
  * {@link TableLayout} and timings — then drives it from its own state changes: {@link place},
- * {@link dealIn}, {@link flyToPile}, {@link tradeSwap}, {@link clearPile}. A dumb
+ * {@link dealIn}, {@link flyToPile}, {@link tradeSwap}, {@link clearPile}, {@link restorePile}. A dumb
  * `<ct-card-layer>` renders {@link cards} + {@link flyers}.
  */
 export class CardTable {
@@ -288,5 +288,14 @@ export class CardTable {
   /** Empty the discard pile (a new round). */
   clearPile(): void {
     this.pile.set([]);
+  }
+
+  /**
+   * Lay the pile out as the game's server lists it — after a page refresh or a reconnect, when the
+   * table never saw those cards played. They lie there at once, in play order, without flying; each
+   * gets a fresh synthetic id, as the faces alone can't tell two copies of a card apart.
+   */
+  restorePile(faces: { suit: number; value: number }[]): void {
+    this.pile.set(faces.map(({ suit, value }) => ({ uuid: this.syntheticUuid--, suit, value })));
   }
 }
