@@ -23,6 +23,27 @@ This repository is an Angular workspace holding the library in `projects/ng-card
 
 CI runs every check on each pull request; `main` only accepts changes through one that passes.
 
+## Publishing to npm
+
+- First check if you are logged in on NPM by running `npm whoami`
+- If not run `npm login`
+
+Publish the built package in `dist/ng-card-table`, not the repository root. The root
+`package.json` is the workspace (`ng-card-table-workspace`) and is marked `"private": true` so it
+can never be published by accident; running `npm publish` there fails with `EPRIVATE`.
+
+1. Bump `version` in [projects/ng-card-table/package.json](projects/ng-card-table/package.json).
+2. Build, check what will be uploaded, then publish:
+
+   ```sh
+   npm run build
+   npm publish ./dist/ng-card-table --dry-run
+   npm publish ./dist/ng-card-table
+   ```
+
+Always rebuild first: `dist` takes its version from the library's `package.json` at build time, so
+a stale build publishes the old version.
+
 ## Licence
 
 MIT — see [LICENSE](LICENSE).
