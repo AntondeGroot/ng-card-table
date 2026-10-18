@@ -19,6 +19,7 @@ export const DEFAULT_LAYOUT: TableLayout = {
     };
   },
 
-  // Mid-table, on the pile: cards are dealt from here, stacked small, and played back to it.
-  deck: () => ({ x: 52.5, y: 50, scale: 0.3 }),
+  // Mid-table, on the pile: cards are dealt from here at the size they lie on the pile, then shrink
+  // into a fan or grow into the hand — and played cards fly back to it at that size.
+  deck: () => ({ x: 52.5, y: 50, scale: 0.6 }),
 };

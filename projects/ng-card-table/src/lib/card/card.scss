@@ -56,19 +56,18 @@
   border-radius: 8%; // a rounder back than face (overrides .face's 5px)
   transform: rotateY(180deg); // the reverse side
 
-  // A back is mostly seen small: stacked at the deck, or in a face-down fan — both scaled to ~0.3.
+  // A back is mostly seen small, in a face-down zone (an opponent's fan, a stock) scaled to ~0.3.
   // Lines drawn here shrink with the card, so the intended widths (2px border, 1px frame) are
-  // divided by the deck scale to come out at that size there. --ct-deck-scale is published by
-  // <ct-card-layer> from the size of the table's deck slot; a fan at another size draws them
-  // thicker or thinner by that ratio (Keezen's are both 0.3).
-  border: calc(2px / var(--ct-deck-scale, 0.3)) solid #fff;
+  // divided by --ct-face-down-scale to come out at that size there; at any other size the back is
+  // the same picture, scaled. A game whose face-down zones are another size sets it to theirs.
+  border: calc(2px / var(--ct-face-down-scale, 0.3)) solid #fff;
 
   // Inner frame — decorative only.
   &::after {
     content: '';
     position: absolute;
     inset: 14%;
-    border: calc(1px / var(--ct-deck-scale, 0.3)) solid rgba(255, 255, 255, 0.55);
+    border: calc(1px / var(--ct-face-down-scale, 0.3)) solid rgba(255, 255, 255, 0.55);
     border-radius: 6%;
   }
 }
