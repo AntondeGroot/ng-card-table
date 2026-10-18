@@ -118,9 +118,8 @@ new CardTable({ hand: () => this.hand(), timing: { flyMs: 350, dealStaggerMs: 50
 | `popScale`      | `1.2`   | Own-card swell during the pop beat.                                    |
 
 The table runs with these as `table.timing`. `<ct-card-layer [table]>` publishes them as CSS vars
-(`--ct-fly-ms`, `--ct-pop-ms`, `--ct-deal-flip-ms`), with the size of a card on the deck as
-`--ct-deck-scale`, so the engine's `setTimeout`s and the SCSS transitions/keyframes **stay in sync
-from one source**.
+(`--ct-fly-ms`, `--ct-pop-ms`, `--ct-deal-flip-ms`), so the engine's `setTimeout`s and the SCSS
+transitions/keyframes **stay in sync from one source**.
 
 ---
 
@@ -141,6 +140,7 @@ own `app-` components and variables never clash with it.
 | **Sprite sheet**    | `--ct-card-sheet` / `--ct-card-cols` / `--ct-card-rows` CSS vars | Swap in a different deck image + grid.                                  |
 | **Own faces**       | `[face]` input — an `<ng-template let-face>`                     | Draw fronts yourself instead (tiles): given each card's `suit`/`value`. |
 | **Piece shape**     | `--ct-card-width` / `--ct-card-aspect` CSS vars                  | Pieces that are not card-shaped — wider, squarer tiles.                 |
+| **Face-down size**  | `--ct-face-down-scale` CSS var (default `0.3`)                   | The size of a card in a face-down zone, which backs are drawn for.      |
 
 ### `TableLayout`
 
@@ -303,10 +303,12 @@ layout divides board pixel coordinates by 6 to reach `%`.
   transitions (`card-layer.scss`) and flip keyframes (`card/card.scss`) follow automatically. Change
   a value in one place (the timing) and both TS and CSS update. Only the internal `LAND_BUFFER_MS`
   (how long after the flight the flyer swaps to a pile element) and `DEAL_CLEAR_BUFFER_MS` are fixed.
-- **Deck size ↔ card back.** The card `.back` border widths are `calc(2px / var(--ct-deck-scale))`,
-  where `--ct-deck-scale` is the deck layout's `scale`, so a back stacked at the deck keeps a 2px
-  border at any deck size. Backs in a face-down fan are drawn at that zone's own scale; Keezen's fans
-  and deck are both 0.3, so they match.
+- **Card back ↔ face-down size.** The card `.back` border widths are
+  `calc(2px / var(--ct-face-down-scale))`, so a back in a face-down zone of that scale keeps a 2px
+  border; at other sizes it is the same picture, scaled. It defaults to `0.3`, the size of Keezen's
+  face-down fans; a game whose face-down zones are another size sets `--ct-face-down-scale` on the
+  layer. It is separate from the deck's size, which is the size cards are dealt at (`0.6` in
+  `DEFAULT_LAYOUT`, the size of a played card).
 - **Selector prefix.** Components use the app's `app-` selector prefix. If you publish this as a
   standalone library, give it a library-specific prefix instead.
 - **Writable `pile` signal.** `pile` is exposed writable for the rare no-animation land

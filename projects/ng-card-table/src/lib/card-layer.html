@@ -7,7 +7,6 @@
   [style.--ct-fly-ms]="table().timing.flyMs + 'ms'"
   [style.--ct-pop-ms]="table().timing.popMs + 'ms'"
   [style.--ct-deal-flip-ms]="table().timing.dealFlipMs + 'ms'"
-  [style.--ct-deck-scale]="deckScale()"
 >
   @for (c of table().cards(); track c.uuid) {
     <ct-card

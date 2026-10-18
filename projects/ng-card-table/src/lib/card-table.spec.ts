@@ -60,6 +60,23 @@ describe('CardTable', () => {
   });
 
   describe('dealIn', () => {
+    // A dealt card leaves the deck at the size a played card lies on the pile, then shrinks into a
+    // face-down fan or grows into the hand — it must not start out as small as an opponent's card.
+    it('deals cards at the size of a played card by default', () => {
+      // GIVEN a card already played, and a fresh one in the hand
+      const played = card();
+      const dealt = card();
+      table.pile.set([played]);
+      hand.set([dealt]);
+
+      // WHEN the fresh card is dealt
+      table.dealIn([dealt.uuid]);
+
+      // THEN it starts out the size the played card lies at
+      const [onPile, beingDealt] = table.cards();
+      expect(beingDealt.scale).toBe(onPile.scale);
+    });
+
     it('renders dealt cards stacked at the deck on the first frame, then releases them', () => {
       const a = card();
       const b = card();
@@ -71,7 +88,7 @@ describe('CardTable', () => {
       // first frame: at the deck centre, deck-sized
       const deck = layout.deck(0, 1);
       expect(table.cards()[0].x).toBeCloseTo(deck.x);
-      expect(table.cards()[0].scale).toBeCloseTo(0.3);
+      expect(table.cards()[0].scale).toBeCloseTo(deck.scale!);
 
       // after the double-rAF release they fan out to their real slots
       vi.advanceTimersByTime(50);
@@ -486,8 +503,20 @@ describe('CardTable', () => {
       // THEN both start on the deck, deck-sized, as hand cards
       const deck = layout.deck(0, 1);
       expect(table.cards()).toEqual([
-        expect.objectContaining({ uuid: a.uuid, zoneId: 'hand', x: deck.x, y: deck.y, scale: 0.3 }),
-        expect.objectContaining({ uuid: b.uuid, zoneId: 'hand', x: deck.x, y: deck.y, scale: 0.3 }),
+        expect.objectContaining({
+          uuid: a.uuid,
+          zoneId: 'hand',
+          x: deck.x,
+          y: deck.y,
+          scale: deck.scale,
+        }),
+        expect.objectContaining({
+          uuid: b.uuid,
+          zoneId: 'hand',
+          x: deck.x,
+          y: deck.y,
+          scale: deck.scale,
+        }),
       ]);
 
       // WHEN the game then takes one of them out of the hand

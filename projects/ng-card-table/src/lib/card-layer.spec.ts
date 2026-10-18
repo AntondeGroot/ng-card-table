@@ -4,7 +4,6 @@ import { TestBed } from '@angular/core/testing';
 import { CardLayer } from './card-layer';
 import { CardTable } from './card-table';
 import { CardFace } from './card-table.types';
-import { DEFAULT_LAYOUT } from './default-layout';
 
 /**
  * A game that draws its own faces — a Rummikub tile: the number, in the colour of its suit. It
@@ -140,29 +139,6 @@ describe('CardLayer', () => {
     // THEN only the face-up card is reported: its uuid on click, its value on hover, then null
     expect(clicked).toEqual([1]);
     expect(hovered).toEqual([7, null]);
-  });
-
-  // A card back is drawn with a 2px border — at the size it is mostly seen, stacked on the deck. The
-  // layer reads that size from the table's deck slot; a game whose layout gives the deck no size
-  // stacks full-size cards there, and their borders must not come out thinner than 2px.
-  it("publishes the size of a card on the table's deck, full size when the layout gives none", () => {
-    // GIVEN one table whose deck stacks cards at 0.3, and one whose deck says nothing about size
-    const sized = new CardTable({ hand: () => [] });
-    const unsized = new CardTable({
-      hand: () => [],
-      layout: { ...DEFAULT_LAYOUT, deck: () => ({ x: 50, y: 50 }) },
-    });
-
-    // WHEN a layer draws each
-    const published = [sized, unsized].map((table) => {
-      const fixture = layerOf(table);
-      fixture.detectChanges();
-      const layer = (fixture.nativeElement as HTMLElement).querySelector('.card-layer')!;
-      return (layer as HTMLElement).style.getPropertyValue('--ct-deck-scale');
-    });
-
-    // THEN the backs are drawn against that size: the deck's own, else a full-size card
-    expect(published).toEqual(['0.3', '1']);
   });
 
   // A flyer is a card's stand-in on the move — the viewer's own play swelling before it flies,

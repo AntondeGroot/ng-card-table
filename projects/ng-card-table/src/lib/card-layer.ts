@@ -1,15 +1,7 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  output,
-  TemplateRef,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output, TemplateRef } from '@angular/core';
 import { Card } from './card/card';
 import { CardTable } from './card-table';
 import { CardVM, FaceContext } from './card-table.types';
-import { DECK_ZONE } from './zone-layout';
 
 /**
  * The card layer: a dumb, reusable presentational component that renders a {@link CardTable}'s
@@ -35,9 +27,6 @@ export class CardLayer {
 
   readonly cardClick = output<number>();
   readonly cardHover = output<number | null>();
-
-  /** The size of a card stacked onto the deck, which the backs' borders are drawn against. */
-  protected readonly deckScale = computed(() => this.table().nextPositionIn(DECK_ZONE).scale ?? 1);
 
   // A face-down card is someone else's: it reports nothing, so no click selects it and no hover
   // gives its value away. The CSS only stops the pointer; this is what keeps the card silent.
