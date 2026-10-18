@@ -179,6 +179,62 @@ describe('CardTable', () => {
     });
   });
 
+  describe('restorePile', () => {
+    // A refresh: the server lists what was played, but the table never saw it fly — so the cards
+    // must simply lie on the pile, in play order and at their slots, with nothing animating.
+    it('lays the faces on the pile in play order, at rest', () => {
+      table.restorePile([
+        { suit: 0, value: 5 },
+        { suit: 3, value: 12 },
+      ]);
+
+      expect(table.pile().map(({ suit, value }) => ({ suit, value }))).toEqual([
+        { suit: 0, value: 5 },
+        { suit: 3, value: 12 },
+      ]);
+      expect(table.cards().every((c) => c.inPile)).toBe(true);
+      expect(table.pile().map((c) => table.positionOf(c.uuid))).toEqual([
+        layout.pile(0, 2),
+        layout.pile(1, 2),
+      ]);
+      expect(table.flyers()).toHaveLength(0);
+      expect(table.dealing()).toBe(false);
+    });
+
+    // The table tracks cards by uuid. Two decks put the same face on the pile twice, and an
+    // opponent's card played after the restore lands with a synthetic id too — none may share one.
+    it('gives every restored card its own id, apart from one played onto the pile later', () => {
+      table.restorePile([
+        { suit: 0, value: 5 },
+        { suit: 0, value: 5 },
+      ]);
+      table.flyToPile({ suit: 3, value: 12, x: 10, y: 20 }); // an opponent's play: no uuid
+      vi.advanceTimersByTime(650);
+
+      const uuids = table.pile().map((c) => c.uuid);
+      expect(uuids).toHaveLength(3);
+      expect(new Set(uuids).size).toBe(3);
+    });
+
+    // A reconnect: the pile still holds what the table saw before the drop, but the server's list
+    // is the whole truth — appending to it would show the cards played before the drop twice.
+    it('replaces whatever was already on the pile', () => {
+      table.pile.set([card(5, 0), card(6, 0)]);
+
+      table.restorePile([
+        { suit: 0, value: 5 },
+        { suit: 0, value: 6 },
+        { suit: 2, value: 7 },
+      ]);
+
+      expect(table.pile().map(({ suit, value }) => ({ suit, value }))).toEqual([
+        { suit: 0, value: 5 },
+        { suit: 0, value: 6 },
+        { suit: 2, value: 7 },
+      ]);
+    });
+  });
+
   describe('timing', () => {
     it('runs with the default timings, retuned where the game says', () => {
       const custom = new CardTable({ hand, timing: { flyMs: 200 } });
