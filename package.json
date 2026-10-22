@@ -15,7 +15,7 @@
     "diagrams": "node projects/ng-card-table/docs/architecture.mjs",
     "diagrams:check": "node projects/ng-card-table/docs/architecture.mjs --check"
   },
-  "packageManager": "npm@12.2.0",
+  "packageManager": "npm@12.2.1",
   "dependencies": {
     "@angular/common": "^22.0.0",
     "@angular/compiler": "^22.0.0",
