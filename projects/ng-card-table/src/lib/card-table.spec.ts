@@ -57,6 +57,14 @@ describe('CardTable', () => {
       expect(cards[0].inPile).toBe(true);
       expect(cards[0].x).toBeCloseTo(layout.pile(0, 1).x);
     });
+
+    // Stacked shadows add up: a deep pile would sit in a black halo, so only its top cards cast one.
+    it('drops the shadow of a pile card buried under four others', () => {
+      const played = [card(), card(), card(), card(), card()];
+      table.pile.set(played);
+
+      expect(table.cards().map((c) => c.shadow)).toEqual([false, true, true, true, true]);
+    });
   });
 
   describe('dealIn', () => {
