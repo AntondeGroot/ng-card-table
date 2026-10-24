@@ -45,6 +45,7 @@ export function toCardVM({ card, zoneId, faceDown, pos }: PlacedCard, frame: Tab
     // While dealing, the sooner a card flies (lower delay) the higher it sits, so it's taken off
     // the TOP of the deck stack.
     z: dealing ? 400 - Math.round(dealDelay / 20) : pos.z,
+    shadow: pos.shadow ?? true,
     dealDelay,
     dealing,
     hidden: frame.hidden.has(card.uuid),

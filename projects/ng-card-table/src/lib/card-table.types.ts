@@ -27,6 +27,8 @@ export interface Pos {
   rot?: number;
   scale?: number;
   z?: number;
+  /** Casts its drop shadow (default) — false for a card buried deep in a stack, out of sight. */
+  shadow?: boolean;
 }
 
 /**
@@ -81,6 +83,8 @@ export interface CardVM {
   rot: number;
   scale: number;
   z: number | undefined;
+  /** Casts its drop shadow; a buried card doesn't, or a stack's shadows add up to a black halo. */
+  shadow: boolean;
   dealDelay: number;
   dealing: boolean;
   hidden: boolean;

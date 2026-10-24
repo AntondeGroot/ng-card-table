@@ -31,6 +31,7 @@
       [class.flip-in]="c.flip === 'in'"
       [class.flip-out]="c.flip === 'out'"
       [class.snap]="c.snap"
+      [class.shadowless]="!c.shadow"
       (click)="click(c)"
       (mouseenter)="hover(c, true)"
       (mouseleave)="hover(c, false)"

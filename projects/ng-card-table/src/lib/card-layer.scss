@@ -85,6 +85,11 @@
   pointer-events: none;
 }
 
+// A card buried in a stack (deep in the pile): its shadow would only darken the ones above it.
+.card.shadowless {
+  box-shadow: none;
+}
+
 // A card its flyer has just landed on the pile: it is placed there, not flown a second time.
 .card.snap {
   transition: none;
